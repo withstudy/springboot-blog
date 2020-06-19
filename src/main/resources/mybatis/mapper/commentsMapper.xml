@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhb.blog.mapper.CommentsMapper">
+    <select id="findCommentsAll" resultType="com.xhb.blog.entity.Comments" parameterType="java.util.Map">
+        select * from comments
+        <if test="con_id != null and where != null">
+            where con_id= #{con_id} and  comments like #{where}
+        </if>
+        <if test="con_id != null and where == null">
+            where  con_id= #{con_id}
+        </if>
+        <if test="con_id == null and where != null">
+            where  comments like #{where}
+        </if>
+    </select>
+
+    <select id="findCommentsPage" resultType="com.xhb.blog.entity.Comments" parameterType="com.xhb.blog.entity.Page">
+        select * from comments
+
+        <if test="where != null and where2 != null">
+            where con_id=#{where} and comments like #{where2}
+        </if>
+        <if test="where == null and where2 != null">
+            where  comments like #{where2}
+        </if>
+        <if test="where != null and where2 == null">
+            where con_id=#{where}
+        </if>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="findCommentsById" parameterType="Integer" resultType="com.xhb.blog.entity.Comments">
+        select * from comments where id=#{id}
+    </select>
+
+    <delete id="deleteCommentsById" parameterType="Integer">
+        delete from comments where id=#{id}
+    </delete>
+
+    <delete id="deleteCommentsByCid" parameterType="Integer">
+        delete from comments where con_id = #{cid}
+    </delete>
+
+    <insert id="addComments" parameterType="com.xhb.blog.entity.Comments">
+        insert into comments(con_id,username,commnets,addTime) values(#{con_id},#{username},#{comments},#{addTime})
+    </insert>
+
+    <update id="updateComments" parameterType="com.xhb.blog.entity.Comments">
+        update comments set comments=#{comments} where id=#{id}
+    </update>
+</mapper>

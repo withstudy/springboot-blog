@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhb.blog.mapper.CategoryMapper">
+    <select id="findCategoryAll" resultType="com.xhb.blog.entity.Category">
+        select * from category
+    </select>
+    <select id="findCategoryPage" resultType="com.xhb.blog.entity.Category" parameterType="com.xhb.blog.entity.Page">
+        select * from category limit #{start},#{pageSize}
+    </select>
+
+    <select id="deleteCategoryById" parameterType="Integer">
+        delete from category where id=#{id}
+    </select>
+
+    <insert id="addCategory" parameterType="com.xhb.blog.entity.Category">
+        insert into category(name,content) values(#{name},#{content})
+    </insert>
+
+    <select id="findCategoryById" parameterType="Integer" resultType="com.xhb.blog.entity.Category">
+        select * from category where id=#{id};
+    </select>
+
+    <update id="updateCategory" parameterType="com.xhb.blog.entity.Category">
+        update category set name=#{name},content=#{content} where id=#{id}
+    </update>
+    <select id="findCategoryByName" resultType="com.xhb.blog.entity.Category" parameterType="String">
+        select * from category where name = #{name}
+    </select>
+</mapper>

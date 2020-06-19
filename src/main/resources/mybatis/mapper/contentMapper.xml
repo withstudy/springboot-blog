@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhb.blog.mapper.ContentMapper">
+    <select id="findContentAll" resultType="com.xhb.blog.entity.Content" parameterType="String">
+        select * from content
+        <if test="null != where">
+            where content like #{where}
+        </if>
+    </select>
+
+    <select id="findContentById" resultType="com.xhb.blog.entity.Content" parameterType="Integer">
+        select * from content where id=#{id}
+    </select>
+
+    <select id="findContentByPage" parameterType="com.xhb.blog.entity.Page" resultType="com.xhb.blog.entity.Content">
+        select * from content
+        <if test="null != where2">
+            where content like #{where2}
+        </if>
+        limit #{start},#{pageSize}
+    </select>
+
+    <delete id="deleteContentById" parameterType="Integer">
+        delete from content where id=#{id}
+    </delete>
+
+    <insert id="addContent" parameterType="com.xhb.blog.entity.Content">
+        insert into content(c_id,u_id,title,description,content,addTime)
+        values (#{c_id},#{u_id},#{title},#{description},#{content},#{addTime})
+    </insert>
+
+    <update id="updateContent" parameterType="com.xhb.blog.entity.Content">
+        update content set c_id=#{c_id} ,u_id=#{u_id},title=#{title} ,description=#{description} ,
+        content=#{content} where id=#{id}
+    </update>
+</mapper>

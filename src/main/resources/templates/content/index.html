@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>category-index</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <style>
+        .many {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .content {
+            width: 30%;
+        }
+
+        .description {
+            width: 15%;
+        }
+
+        .other {
+            width: 8%;
+        }
+
+        .comments {
+            width: 5%;
+        }
+    </style>
+</head>
+<body>
+<div th:include=" base :: base"></div>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="/blog/index">管理首页</a></li>
+        <li><a href="/blog/content/contents">内容首页</a></li>
+        <li class="active">内容列表</li>
+    </ol>
+    <h3>内容列表</h3>
+    <form action="/blog/content/contents" method="get">
+        <input type="text" class="form-control" id="username" placeholder="关键字" name="where" th:value="${page.where2}" style="
+            width: 250px;display: inline-block" >
+        <input type="submit" class="btn btn-default" value="查找" style="display: inline-block;margin-left: 20px">
+    </form><br>
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>ID</th>
+            <th>作者</th>
+            <th>分类</th>
+            <th>标题</th>
+            <th>简介</th>
+            <th>内容</th>
+            <th>阅读量</th>
+            <th>评论数</th>
+            <th>发布时间</th>
+            <th>操作</th>
+        </tr>
+
+        <tr th:if="${page.lists.size() > 0}" th:each="content:${page.lists}">
+            <td>[[${content.id }]]</td>
+            <td th:each="user:${users}" th:if="${user.id == content.u_id}">[[${user.username}]]</td>
+            <td th:each="category:${categorys}" th:if="${category.id == content.c_id}">[[${category.name}]]</td>
+            <td><p class="many">[[${content.title }]]</p></td>
+            <td class="description"><p class="many">[[${content.description }]]</p></td>
+            <td class="content"><p class="many">[[${content.content }]]</p></td>
+            <td>[[${content.views}]]</td>
+            <td class="comments">[[${content.comments}]] <a  shiro:hasPermission = "comments:update" th:href="@{'/blog/comment/comments?cid='+${content.id}}">查看</a>
+            </td>
+            <td>[[${content.addTime}]]</td>
+            <td class="other">
+                <a shiro:hasPermission = "content:update" th:href="@{'/blog/content/update/'+${content.id }}">编辑</a> |
+                <a shiro:hasPermission = "content:delete" href="javascript:;" th:onclick="edit([[${content.id }]])" >删除</a>
+<!--                <a th:href="@{'/blog/content/delete/'+${content.id }}">删除</a>-->
+            </td>
+        </tr>
+
+        <tr th:unless="${page.lists.size() > 0}">
+            <td colspan="6" style="text-align: center">
+                无
+            </td>
+        </tr>
+
+    </table>
+    <div th:include="page :: page"></div>
+
+    <script>
+        function edit(cid) {
+           var b = confirm("你确定删除该内容及其评论吗?");
+           if(b){
+               $.get({
+                   url:"/blog/content/delete/"+cid,
+                   success:function () {
+                       //刷新
+                       location.reload();
+                   }
+               })
+           }
+        }
+    </script>
+</div>
+</body>
+</html>

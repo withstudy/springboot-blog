@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav aria-label="..." th:fragment="page">
+    <ul class="pager">
+        <li class="previous">
+            <a th:if="${page.currPage} gt 1" th:href="@{'/blog/'+${controller}+  '?currPage='  +${page.currPage - 1} +  ${page.where==null?'':'&cid='+page.where}  +${page.where2==null?'':'&where='+page.where2} }">
+                <span aria-hidden="true">&larr;</span> 上一页
+            </a>
+            <span th:unless="${page.currPage} gt 1">没有上一页了</span>
+        </li>
+        <li>一共有[[${page.totalCount }]]条数据，每页显示[[${page.pageSize }]]条数据，共[[${page.totalPage }]]页，当前[[${page.currPage
+            }]]页
+        </li>
+        <li class="next">
+            <a th:if="${page.currPage} lt ${page.totalPage}"
+               th:href="@{'/blog/'+${controller}+'?currPage='+${page.currPage + 1}  +  ${page.where==null?'':'&cid='+page.where}  +${page.where2==null?'':'&where='+page.where2}  }">
+                下一页<span aria-hidden="true">&rarr;</span>
+            </a>
+            <span th:unless="${page.currPage} lt ${page.totalPage}">没有下一页了</span>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

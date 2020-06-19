@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user-add</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include=" base :: base"></div>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="javascript:;">管理首页</a></li>
+        <li><a href="javascript:;">用户管理</a></li>
+        <li class="active">添加用户</li>
+    </ol>
+    <h3>添加用户</h3>
+    <form action="/blog/user/update" method="post">
+        <div class="form-group">
+            <label for="username">用户名:</label>
+            <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username"
+                   th:value="${nuser.username}">
+            <label>[[${usernameErrMsg}]]</label>
+        </div>
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="text" class="form-control" id="password" placeholder="请输入密码" name="password"
+                   th:value="${nuser.password}">
+            <label>[[${passwordErrMsg}]]</label>
+        </div>
+        <div class="form-group">
+            <label for="isadmin">管理员否(1:是,0:否):</label>
+            <input type="text" class="form-control" id="isadmin" placeholder="请输入" name="isAdmin"
+                   th:value="${nuser.isAdmin}">
+        </div>
+        <button type="submit" class="btn btn-default">添加</button>
+    </form>
+</div>
+</body>
+</html>

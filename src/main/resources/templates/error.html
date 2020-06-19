@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <style>
+        #login{
+            width: 35%;
+            margin: 0 auto;
+            padding: 50px;
+            border: 1px gainsboro solid;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="javascript:;"> 后台管理</a>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="javascript:;">管理系统</a></li>
+        <li class="active">错误提示</li>
+    </ol>
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">错误提示</h3>
+        </div>
+        <div class="panel-body">
+            服务器错误，请联系管理员
+        </div>
+        <div class="panel-footer">
+            <a href="javascript:window.history.back();">返回上一步</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

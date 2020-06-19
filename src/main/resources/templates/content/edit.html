@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>category-edit</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include=" base :: base"></div>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="javascript:;">管理首页</a></li>
+        <li class="active">添加内容</li>
+    </ol>
+    <h3>添加内容</h3>
+    <form action="/blog/content/update" method="post">
+        <input type="hidden" name="id" th:value="${content.id }">
+        <div class="form-group">
+            <label for="authoy">作者:</label>
+            <select id="authoy" name="u_id" class="form-control">
+                <!-- -->
+                <option th:each="user:${users}" th:if="${user.id} eq ${content.u_id}" th:value="${user.id}" selected>
+                    [[${ user.username }]]
+                </option>
+                <option th:each="user:${users}" th:unless="${user.id} eq ${content.u_id}" th:value="${user.id}">
+                    [[${ user.username }]]
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category">分类:</label>
+            <select id="category" name="c_id" class="form-control">
+                <!-- -->
+                <option th:each="category:${categorys}" th:if="${category.id} eq ${content.c_id}"
+                        th:value="${category.id}" selected>
+                    [[${ category.name }]]
+                </option>
+                <option th:each="category:${categorys}" th:unless="${category.id} eq ${content.c_id}"
+                        th:value="${category.id}">
+                    [[${ category.name }]]
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="title">标题:</label>
+            <input type="text" class="form-control" id="title" placeholder="请输入内容标题" name="title"
+                   th:value="${content.title }">
+            <label>[[${titleErrMsg}]]</label>
+        </div>
+        <div class="form-group">
+            <label for="comment">简介:</label>
+            <textarea name="description" class="form-control" id="comment" placeholder="请输入内容简介" rows="3">[[${content.description }]]</textarea>
+            <label>[[${descriptionErrMsg}]]</label>
+        </div>
+        <div class="form-group">
+            <label for="content">内容:</label>
+            <textarea class="form-control" id="content" placeholder="请输入内容" name="content" rows="8"> [[${content.content }]]</textarea>
+            <label>[[${contentErrMsg}]]</label>
+        </div>
+        <input type="hidden" name="views" th:value="${content.views }">
+        <input type="hidden" name="comments" th:value="${content.comments }">
+        <input type="hidden" name="addTime" th:value="${content.addTime }">
+        <button type="submit" class="btn btn-default">修改/添加</button>
+    </form>
+
+</div>
+</body>
+</html>

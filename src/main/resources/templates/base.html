@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <style>
+        #header{
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default" th:fragment="base">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/blog/index">后台管理</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/blog/download">公告</a>
+                </li>
+                <li shiro:hasPermission = "user:select" class="dropdown">
+                    <a href="/blog/user/index" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        用户管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/blog/user/index">用户首页</a></li>
+                        <li shiro:hasPermission = "user:create"><a  href="/blog/user/update/-1">添加用户</a></li>
+                    </ul>
+                </li>
+                <li shiro:hasPermission = "category:select" class="dropdown">
+                    <a href="/blog/category/index" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        分类管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/blog/category/index">分类首页</a></li>
+                        <li shiro:hasPermission = "category:create"><a href="/blog/category/update/-1">添加分类</a></li>
+                    </ul>
+                </li>
+                <li shiro:hasPermission = "content:select" class="dropdown">
+                    <a href="/blog/content/index" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        内容管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/blog/content/index">内容首页</a></li>
+                        <li shiro:hasPermission = "content:create"><a href="/blog/content/update/-1">添加内容</a></li>
+                    </ul>
+                </li>
+                <li shiro:hasPermission = "comments:select">
+                    <a href="/blog/comment/index">评论管理</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                       <img id="header" th:src="'/'+${user.img}" style="
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;"> [[${user.username}]]
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/blog/upload?type=img">更改头像</a></li>
+                        <li><a href="/blog/exit">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</body>
+</html>
